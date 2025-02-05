@@ -19,5 +19,6 @@ struct TextFieldPlaceholderCustomColorStyle: ViewModifier {
             }
             content
         }
+        .animation(.linear, value: showPlaceHolder)
     }
 }
