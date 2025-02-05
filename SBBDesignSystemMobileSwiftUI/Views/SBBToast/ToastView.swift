@@ -14,26 +14,25 @@ public struct ToastView: View {
     }
     
     public var body: some View {
-        withAnimation(.easeInOut(duration: viewModel.easeInOutAnimationDuration)) {
-            HStack(alignment: .center, spacing: 16) {
-                viewModel.label
-                    .sbbFont(.small_light)
-                
-                if let actionLabel = viewModel.actionLabel, let action = viewModel.onClickAction {
-                    Button(action: action) {
-                        actionLabel
-                            .sbbFont(.small_bold)
-                    }
+        HStack(alignment: .center, spacing: 16) {
+            viewModel.label
+                .sbbFont(.small_light)
+            
+            if let actionLabel = viewModel.actionLabel, let action = viewModel.onClickAction {
+                Button(action: action) {
+                    actionLabel
+                        .sbbFont(.small_bold)
                 }
             }
-            .foregroundColor(Color.sbbColor(.white))
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            .background((colorScheme == .light) ? Color.black.opacity(0.5): Color.white.opacity(0.3))
-            .cornerRadius(19)
-            .opacity(viewModel.isPresented ? 1 : 0)
         }
+        .foregroundColor(Color.sbbColor(.white))
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+        .background((colorScheme == .light) ? Color.black.opacity(0.5): Color.white.opacity(0.3))
+        .cornerRadius(19)
+        .opacity(viewModel.isPresented ? 1 : 0)
+        .animation(.easeInOut(duration: viewModel.easeInOutAnimationDuration), value: viewModel.isPresented)
     }
 }
 
