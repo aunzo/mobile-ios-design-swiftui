@@ -59,18 +59,19 @@ public struct SBBSwitchStyle: ToggleStyle {
         @Environment(\.colorScheme) var colorScheme
         
         func makeBody(configuration: Self.Configuration) -> some View {
-            RoundedRectangle(cornerRadius: 16, style: .circular)
-                .fill(isOn ? onColor : offColor)
-                .frame(width: 50, height: 31)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 27 / 2, style: .circular)
-                        .fill(thumbColor)
-                        .frame(width: configuration.isPressed ? 33 : 27, height: 27)
-                        .shadow(radius: 1, x: 0, y: 1)
-                        .padding(2)
-                        .offset(x: isOn ? configuration.isPressed ? 6.5 : 9.5 : configuration.isPressed ? -6.5 : -9.5))
-                .animation(Animation.easeInOut(duration: 0.1), value: isOn)
-                .opacity(isEnabled ? 1.0 : 0.5)
+            withAnimation(Animation.easeInOut(duration: 0.1)) {
+                RoundedRectangle(cornerRadius: 16, style: .circular)
+                    .fill(isOn ? onColor : offColor)
+                    .frame(width: 50, height: 31)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 27 / 2, style: .circular)
+                            .fill(thumbColor)
+                            .frame(width: configuration.isPressed ? 33 : 27, height: 27)
+                            .shadow(radius: 1, x: 0, y: 1)
+                            .padding(2)
+                            .offset(x: isOn ? configuration.isPressed ? 6.5 : 9.5 : configuration.isPressed ? -6.5 : -9.5))
+                    .opacity(isEnabled ? 1.0 : 0.5)
+            }
         }
     }
 }
