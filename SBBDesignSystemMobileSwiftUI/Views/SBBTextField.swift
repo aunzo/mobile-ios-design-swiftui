@@ -99,32 +99,60 @@ public struct SBBTextField: View {
     }
     
     public var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            if let icon = icon {
-                icon
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24.0, height: 24.0)
-                    .padding(.top, 12 )
-                    .accessibility(hidden: true)
-            }
-            VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    if let label = label {
-                        VStack(alignment: .leading, spacing: 4) {
-                            if !text.isEmpty {
-                                Text(label)
-                                    .font(.sbbLight(size: 10))
-                                    .foregroundColor(.sbbColor(.placeholder))
-                                    .opacity(text.isEmpty ? 0.0 : 1.0)
-                                    .accessibility(hidden: true)
+        withAnimation(.linear) {
+            HStack(alignment: .top, spacing: 8) {
+                if let icon = icon {
+                    icon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24.0, height: 24.0)
+                        .padding(.top, 12 )
+                        .accessibility(hidden: true)
+                }
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        if let label = label {
+                            VStack(alignment: .leading, spacing: 4) {
+                                if !text.isEmpty {
+                                    Text(label)
+                                        .font(.sbbLight(size: 10))
+                                        .foregroundColor(.sbbColor(.placeholder))
+                                        .opacity(text.isEmpty ? 0.0 : 1.0)
+                                        .accessibility(hidden: true)
+                                }
+                                
+                                if isSecureText {
+                                    SecureField("", text: $text)
+                                        .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
+                                        .sbbFont(.medium_light)
+                                        .accessibility(label: Text(accessibilityText))
+                                        .focused($isFocused)
+                                        .onChange(of: isFocused) { focused in
+                                            DispatchQueue.main.async {
+                                                withAnimation {
+                                                    isEditing = focused
+                                                }
+                                            }
+                                        }
+                                } else {
+                                    TextField("", text: $text)
+                                        .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
+                                        .sbbFont(.medium_light)
+                                        .accessibility(label: Text(accessibilityText))
+                                        .focused($isFocused)
+                                        .onChange(of: isFocused) { focused in
+                                            DispatchQueue.main.async {
+                                                withAnimation {
+                                                    isEditing = focused
+                                                }
+                                            }
+                                        }
+                                }
                             }
-                            
+                        } else {
                             if isSecureText {
                                 SecureField("", text: $text)
-                                    .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
                                     .sbbFont(.medium_light)
-                                    .accessibility(label: Text(accessibilityText))
                                     .focused($isFocused)
                                     .onChange(of: isFocused) { focused in
                                         DispatchQueue.main.async {
@@ -135,9 +163,7 @@ public struct SBBTextField: View {
                                     }
                             } else {
                                 TextField("", text: $text)
-                                    .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
                                     .sbbFont(.medium_light)
-                                    .accessibility(label: Text(accessibilityText))
                                     .focused($isFocused)
                                     .onChange(of: isFocused) { focused in
                                         DispatchQueue.main.async {
@@ -147,53 +173,28 @@ public struct SBBTextField: View {
                                         }
                                     }
                             }
-                        }
-                    } else {
-                        if isSecureText {
-                            SecureField("", text: $text)
-                                .sbbFont(.medium_light)
-                                .focused($isFocused)
-                                .onChange(of: isFocused) { focused in
-                                    DispatchQueue.main.async {
-                                        withAnimation {
-                                            isEditing = focused
-                                        }
-                                    }
-                                }
-                        } else {
-                            TextField("", text: $text)
-                                .sbbFont(.medium_light)
-                                .focused($isFocused)
-                                .onChange(of: isFocused) { focused in
-                                    DispatchQueue.main.async {
-                                        withAnimation {
-                                            isEditing = focused
-                                        }
-                                    }
-                                }
-                        }
                             
-                    }
-                    
-                    if showClearButtonWhenEditing && isFocused && !text.isEmpty {
-                        Button(action: emptyText) {
-                            Image(sbbIcon: .cross_small)
-                                .accessibility(label: Text("Delete input".localized))
                         }
+                        
+                        if showClearButtonWhenEditing && isFocused && !text.isEmpty {
+                            Button(action: emptyText) {
+                                Image(sbbIcon: .cross_small)
+                                    .accessibility(label: Text("Delete input".localized))
+                            }
                             .buttonStyle(SBBIconButtonStyle(size: .small, showBorder: showIconBorder))
                             .padding(.trailing, 16)
+                        }
+                    }
+                    .frame(minHeight: 56)
+                    if let error = error {
+                        Text(error)
+                            .font(.sbbLight(size: 10))
+                            .foregroundColor(.sbbColor(.red))
+                            .padding(.bottom, 8)
                     }
                 }
-                    .frame(minHeight: 56)
-                if let error = error {
-                    Text(error)
-                        .font(.sbbLight(size: 10))
-                        .foregroundColor(.sbbColor(.red))
-                        .padding(.bottom, 8)
-                }
+                .background(bottomLineColor.frame(height: 1), alignment: .bottom)
             }
-            .background(bottomLineColor.frame(height: 1), alignment: .bottom)
-        }
             .padding(.leading, 16)
             .foregroundColor(isEnabled ? .sbbColor(.textBlack) : .sbbColor(.metal))
             .background(boxed ? Color.sbbColor(.viewBackground) : .clear)
@@ -206,7 +207,7 @@ public struct SBBTextField: View {
                         EmptyView()
                     }
                 } , alignment: .center)
-            .animation(.linear, value: isEditing)
+        }
     }
     
     private func emptyText() {
