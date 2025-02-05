@@ -23,7 +23,7 @@ public struct SBBTextField: View {
     @Environment(\.isEnabled) private var isEnabled
     @Binding private var text: String
     @Binding var isEditing: Bool
-    @State private var isFocused = false
+    @FocusState private var isFocused
     let label: String?
     let error: String?
     let additionalAccessibilityText: String?
@@ -32,6 +32,7 @@ public struct SBBTextField: View {
     let showClearButtonWhenEditing: Bool
     let boxed: Bool
     let showIconBorder: Bool
+    let isSecureText: Bool
     
     /**
      Returns a SBBTextField with a label and an optional Image.
@@ -48,7 +49,7 @@ public struct SBBTextField: View {
         - boxed: Shows the Textfield inside a white box when enabled, and with a clear background when disabled (default). Clear background does not work inside SBBFormGroup.
         - isEditing: a binding to get the state of the TextField (whether of not it is editing)
      */
-    public init(text: Binding<String>, label: String? = nil, error: String? = nil, additionalAccessibilityText: String? = nil, icon: Image? = nil, showBottomLine: Bool = true, showClearButtonWhenEditing: Bool = true, showIconBorder: Bool = true, boxed: Bool = false, isEditing: Binding<Bool>? = nil) {
+    public init(text: Binding<String>, label: String? = nil, error: String? = nil, additionalAccessibilityText: String? = nil, icon: Image? = nil, showBottomLine: Bool = true, showClearButtonWhenEditing: Bool = true, showIconBorder: Bool = true, boxed: Bool = false, isEditing: Binding<Bool>? = nil, isSecureText: Bool = false) {
         self._text = text
         if let label = label {
             self.label = NSLocalizedString(label, comment: "")
@@ -70,6 +71,7 @@ public struct SBBTextField: View {
         self.showClearButtonWhenEditing = showClearButtonWhenEditing
         self.showIconBorder = showIconBorder
         self.boxed = boxed
+        self.isSecureText = isSecureText
         self._isEditing = isEditing != nil ? isEditing! : .constant(false)
     }
     
@@ -117,28 +119,56 @@ public struct SBBTextField: View {
                                     .opacity(text.isEmpty ? 0.0 : 1.0)
                                     .accessibility(hidden: true)
                             }
-                            TextField("", text: $text, onEditingChanged: { editing in
-                                DispatchQueue.main.async {
-                                    withAnimation {
-                                        self.isEditing = editing
-                                        self.isFocused = editing
+                            
+                            if isSecureText {
+                                SecureField("", text: $text)
+                                    .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
+                                    .sbbFont(.medium_light)
+                                    .accessibility(label: Text(accessibilityText))
+                                    .onChange(of: isFocused) { focused in
+                                        DispatchQueue.main.async {
+                                            withAnimation {
+                                                isEditing = focused
+                                            }
+                                        }
                                     }
-                                }
-                            })
-                                .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
-                                .sbbFont(.medium_light)
-                                .accessibility(label: Text(accessibilityText))
+                            } else {
+                                TextField("", text: $text)
+                                    .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
+                                    .sbbFont(.medium_light)
+                                    .accessibility(label: Text(accessibilityText))
+                                    .onChange(of: isFocused) { focused in
+                                        DispatchQueue.main.async {
+                                            withAnimation {
+                                                isEditing = focused
+                                            }
+                                        }
+                                    }
+                            }
                         }
                     } else {
-                        TextField("", text: $text, onEditingChanged: { editing in
-                            DispatchQueue.main.async {
-                                withAnimation {
-                                    self.isEditing = editing
-                                    self.isFocused = editing
+                        if isSecureText {
+                            SecureField("", text: $text)
+                                .sbbFont(.medium_light)
+                                .onChange(of: isFocused) { focused in
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            isEditing = focused
+                                        }
+                                    }
                                 }
-                            }
-                        })
-                            .sbbFont(.medium_light)
+                        } else {
+                            TextField("", text: $text)
+                                .sbbFont(.medium_light)
+                                .onChange(of: isFocused) { focused in
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            isEditing = focused
+                                        }
+                                    }
+                                }
+                        }
+                            
                     }
                     
                     if showClearButtonWhenEditing && isFocused && !text.isEmpty {
@@ -172,7 +202,7 @@ public struct SBBTextField: View {
                         EmptyView()
                     }
                 } , alignment: .center)
-            .animation(.linear)
+            .animation(.linear, value: isEditing)
     }
     
     private func emptyText() {
