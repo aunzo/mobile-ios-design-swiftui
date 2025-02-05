@@ -35,6 +35,8 @@ public class SBBAppearance {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(color)
         appearance.shadowColor = .clear
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "textWhite", in: SBBBundle.getBundle(), compatibleWith: nil)!,
+                                               NSAttributedString.Key.font : UIFont(name: "SBBWeb-Bold", size: 30)!]
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "textWhite", in: SBBBundle.getBundle(), compatibleWith: nil)!,
                                              NSAttributedString.Key.font : UIFont(name: "SBBWeb-Light", size: 18)!]
         UINavigationBar.appearance().standardAppearance = appearance
