@@ -125,6 +125,7 @@ public struct SBBTextField: View {
                                     .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
                                     .sbbFont(.medium_light)
                                     .accessibility(label: Text(accessibilityText))
+                                    .focused($isFocused)
                                     .onChange(of: isFocused) { focused in
                                         DispatchQueue.main.async {
                                             withAnimation {
@@ -137,6 +138,7 @@ public struct SBBTextField: View {
                                     .modifier(TextFieldPlaceholderCustomColorStyle(showPlaceHolder: text.isEmpty, placeholder: label))
                                     .sbbFont(.medium_light)
                                     .accessibility(label: Text(accessibilityText))
+                                    .focused($isFocused)
                                     .onChange(of: isFocused) { focused in
                                         DispatchQueue.main.async {
                                             withAnimation {
@@ -150,6 +152,7 @@ public struct SBBTextField: View {
                         if isSecureText {
                             SecureField("", text: $text)
                                 .sbbFont(.medium_light)
+                                .focused($isFocused)
                                 .onChange(of: isFocused) { focused in
                                     DispatchQueue.main.async {
                                         withAnimation {
@@ -160,6 +163,7 @@ public struct SBBTextField: View {
                         } else {
                             TextField("", text: $text)
                                 .sbbFont(.medium_light)
+                                .focused($isFocused)
                                 .onChange(of: isFocused) { focused in
                                     DispatchQueue.main.async {
                                         withAnimation {
@@ -180,7 +184,7 @@ public struct SBBTextField: View {
                             .padding(.trailing, 16)
                     }
                 }
-                    .frame(minHeight: 48)
+                    .frame(minHeight: 56)
                 if let error = error {
                     Text(error)
                         .font(.sbbLight(size: 10))
@@ -202,7 +206,7 @@ public struct SBBTextField: View {
                         EmptyView()
                     }
                 } , alignment: .center)
-            .animation(.linear, value: isEditing)
+            .animation(.linear, value: isFocused)
     }
     
     private func emptyText() {
