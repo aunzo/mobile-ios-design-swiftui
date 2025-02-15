@@ -32,7 +32,7 @@ struct SBBPickerWrapper<Picker: View>: View {
                     pickerView
                         .frame(height: SBBPickerValues.getHeight(nbValues), alignment: .center)
                         .background(Color.sbbColor(.viewBackground))
-                        .cornerRadius(16)
+                        .cornerRadius(4)
                 } else {
                     VStack(spacing: 0) {
                         pickerView

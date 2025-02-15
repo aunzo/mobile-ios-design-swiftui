@@ -54,7 +54,7 @@ public struct SBBPrimaryButtonStyle: ButtonStyle {
                     .foregroundColor(textColor)
                     .frame(height: 46)
                     .background(getBackgroundColor(enabled: isEnabled, isPressed: configuration.isPressed))
-                    .cornerRadius(23)
+                    .cornerRadius(4)
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
             } else {
@@ -65,7 +65,7 @@ public struct SBBPrimaryButtonStyle: ButtonStyle {
                     .frame(height: 46)
                     .frame(minWidth: 0, maxWidth: horizontalSizeClass == .compact ? .infinity : 343)
                     .background(getBackgroundColor(enabled: isEnabled, isPressed: configuration.isPressed))
-                    .cornerRadius(23)
+                    .cornerRadius(4)
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
             }

@@ -82,7 +82,7 @@ public struct SBBHeaderBox<Content: View, AdditionalContent: View>: View {
                             .padding(16)
                     }
                     .background(Color.sbbColor(.viewBackground))
-                    .cornerRadius(16)
+                    .cornerRadius(4)
                     .shadow(color: Color.sbbColor(.tabshadow), radius: 5)
                     
                     if let additionalContent = additionalContent {
@@ -94,7 +94,7 @@ public struct SBBHeaderBox<Content: View, AdditionalContent: View>: View {
                     
                 }
                 .background(Color.sbbColor(colorScheme == .dark ? .midnight : .cloud))
-                .cornerRadius(16)
+                .cornerRadius(4)
                 .shadow(color: Color.sbbColor(.tabshadow), radius: additionalContent == nil ? 8 : 0)
             }
             .sbbScreenPadding(.horizontal)

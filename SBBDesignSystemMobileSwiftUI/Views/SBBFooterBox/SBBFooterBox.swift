@@ -42,7 +42,7 @@ public struct SBBFooterBox<Content: View>: View {
                 .padding(.bottom, hasTabBar ? horizontalSizeClass == .compact && verticalSizeClass == .regular ? 75 + 36 : 38 + 24 : 24)
         }
         .background(Color.sbbColor(.modalBackground))
-        .cornerRadius(16, corners: [.topLeft, .topRight])
+        .cornerRadius(4, corners: [.topLeft, .topRight])
         .shadow(color: Color.sbbColor(.tabshadow), radius: 5)
     }
 }

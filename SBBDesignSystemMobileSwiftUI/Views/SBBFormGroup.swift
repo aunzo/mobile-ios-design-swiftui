@@ -57,7 +57,7 @@ public struct SBBFormGroup<Content>: View where Content: View {
                 content()
             }
             .background(Color.sbbColor(.viewBackground))
-            .cornerRadius(16)
+            .cornerRadius(4)
         }
     }
 }

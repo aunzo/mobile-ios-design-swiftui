@@ -154,8 +154,8 @@ public struct SBBModalView<Content>: View where Content: View {
                     .accessibilitySortPriority(1)
             }
                 .background(Color.sbbColor(.modalBackground).edgesIgnoringSafeArea(.bottom))
-                .cornerRadius(style != .full ? 16 : 0, corners: [.topLeft, .topRight])
-                .cornerRadius(style == .popup ? 16 : 0, corners: [.bottomLeft, .bottomRight])
+                .cornerRadius(style != .full ? 4 : 0, corners: [.topLeft, .topRight])
+                .cornerRadius(style == .popup ? 4 : 0, corners: [.bottomLeft, .bottomRight])
                 .background(    // we need to reapply background color for styles, where not all edges are rounded (.cornerRadius clips the view)
                     (style == .popup ? Color.clear : Color.sbbColor(.modalBackground))
                         .offset(y: 16)

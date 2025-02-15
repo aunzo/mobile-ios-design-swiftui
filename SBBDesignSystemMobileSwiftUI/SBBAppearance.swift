@@ -39,6 +39,7 @@ public class SBBAppearance {
                                                NSAttributedString.Key.font : UIFont(name: "SBBWeb-Bold", size: 30)!]
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "textWhite", in: SBBBundle.getBundle(), compatibleWith: nil)!,
                                              NSAttributedString.Key.font : UIFont(name: "SBBWeb-Light", size: 18)!]
+        appearance.backButtonAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "textWhite", in: SBBBundle.getBundle(), compatibleWith: nil)!]
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
