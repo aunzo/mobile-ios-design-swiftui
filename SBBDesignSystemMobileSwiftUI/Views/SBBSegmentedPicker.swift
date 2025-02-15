@@ -107,9 +107,9 @@ public struct SBBSegmentedPicker<Segment, Selection>: View where Segment: View, 
                 Rectangle()
                     .fill(style.backgroundColor)
                     .saturation(style == .primaryColor && Color.sbbColor(.primary) != .red ? 0.7 : 1.0) // For blue theme - use darker blue for the background
-                    .cornerRadius(20)
+                    .cornerRadius(4)
                     .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .circular)
+                RoundedRectangle(cornerRadius: 4, style: .circular)
                     .stroke(Color.sbbColor(.iron), lineWidth: self.colorScheme == .dark && self.style == .normal ? 1 : 0) // only draw border for dark mode with normal style
                 )
                 
@@ -117,9 +117,9 @@ public struct SBBSegmentedPicker<Segment, Selection>: View where Segment: View, 
                 Rectangle()
                     .fill(style.currentSegmentBackgroundColor)
                     .frame(width: self.segmentWidth(parentWidth: geometry.size.width))
-                    .cornerRadius(20)
+                    .cornerRadius(4)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 20, style: .circular)
+                        RoundedRectangle(cornerRadius: 4, style: .circular)
                             .stroke(style.currentSegmentOutlineColor, lineWidth: 1)
                     )
                     .offset(x: self.segmentWidth(parentWidth: geometry.size.width) * CGFloat(self.selectionIndex))
@@ -160,7 +160,7 @@ public struct SBBSegmentedPicker<Segment, Selection>: View where Segment: View, 
         }
             .padding(1)
             .frame(maxWidth: .infinity, minHeight: 44, maxHeight: 44)
-            .cornerRadius(20)
+            .cornerRadius(4)
     }
     
     private func segment(for xPosition: CGFloat, in parentWidth: CGFloat) -> Selection {

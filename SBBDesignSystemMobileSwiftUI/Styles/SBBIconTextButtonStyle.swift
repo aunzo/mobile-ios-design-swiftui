@@ -47,7 +47,7 @@ public struct SBBIconTextButtonStyle: ButtonStyle {
                 .padding(.horizontal, 8)
                 .frame(width: 96, height: 104)
                 .background(getBackgroundColor(enabled: isEnabled, isPressed: configuration.isPressed))
-                .cornerRadius(16)
+                .cornerRadius(4)
         }
         
         private func getForegroundColor(enabled: Bool) -> Color {

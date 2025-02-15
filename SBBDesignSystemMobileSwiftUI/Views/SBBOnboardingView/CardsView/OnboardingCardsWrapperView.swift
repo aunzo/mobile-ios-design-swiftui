@@ -31,7 +31,7 @@ struct OnboardingCardsWrapperView: View {
                         .padding([.horizontal, .bottom], 8)
                         .padding(.top, 16)
                         .background(Color.sbbColor(.primary).edgesIgnoringSafeArea([.top, .horizontal]))
-                        .cornerRadius(16, corners: [.bottomLeft, .bottomRight])
+                        .cornerRadius(4, corners: [.bottomLeft, .bottomRight])
                 }
             }
         }

@@ -74,11 +74,11 @@ public struct SBBIconButtonStyle: ButtonStyle {
                 .padding(padding)
                 .frame(width: diameter, height: diameter)
                 .background(getBackgroundColor(enabled: isEnabled, isPressed: configuration.isPressed))
-                .cornerRadius(showBorder ? diameter / 2 : 0)
+                .cornerRadius(showBorder ? 4 : 0)
                 .background(
                     Group {
                         if showBorder {
-                            RoundedRectangle(cornerRadius: diameter / 2, style: .circular)
+                            RoundedRectangle(cornerRadius: 4, style: .circular)
                                 .stroke(getForegroundColor(enabled: isEnabled), lineWidth: 1)
                         }
                     }

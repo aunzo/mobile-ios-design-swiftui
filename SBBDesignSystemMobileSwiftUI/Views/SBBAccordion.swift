@@ -67,7 +67,7 @@ public struct SBBAccordion: View {
                 }
                     .padding(.horizontal, 16)
                     .background(Color.sbbColor(.viewBackground))
-                    .cornerRadius(16)
+                    .cornerRadius(4)
                     .accentColor(.sbbColor(.textBlack))
                     .accessibilityElement(children: .combine)
                     .accessibility(identifier: "infoViewCollapsible")

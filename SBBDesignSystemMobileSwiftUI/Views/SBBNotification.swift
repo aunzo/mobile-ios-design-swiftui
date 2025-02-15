@@ -417,13 +417,13 @@ public struct SBBNotification: View {
                 }
                 .padding(16)
                 .background(Color.sbbColor(colorScheme == .dark ? .black : .white).opacity(colorScheme == .dark ? 0.85 : 0.95))
-                .cornerRadius(16, corners: [.topRight, .bottomRight])
-                .cornerRadius(7, corners: [.topLeft, .bottomLeft])
+                .cornerRadius(4, corners: [.topRight, .bottomRight])
+                .cornerRadius(4, corners: [.topLeft, .bottomLeft])
                 .padding(1)
                 .padding(.leading, 8)
             }
             .background(backgroundColor)
-            .cornerRadius(17)
+            .cornerRadius(4)
             .transition(.opacity)
             .onAppear {
                 if let closeAfterSeconds = self.closeAfterSeconds {

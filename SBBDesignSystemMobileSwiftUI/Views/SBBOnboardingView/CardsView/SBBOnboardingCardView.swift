@@ -140,7 +140,7 @@ public struct SBBOnboardingCardView: View {
                     .clipped()
             }
                 .background(Color.sbbColor(.viewBackground))
-                .cornerRadius(16)
+                .cornerRadius(4)
         }
     }
     
@@ -183,7 +183,7 @@ public struct SBBOnboardingCardView: View {
             }
         }
             .background(Color.sbbColor(.viewBackground))
-            .cornerRadius(16)
+            .cornerRadius(4)
     }
     
     public var body: some View {
@@ -192,11 +192,11 @@ public struct SBBOnboardingCardView: View {
                 ScrollView(showsIndicators: false) {
                     self.content
                         .background(Color.sbbColor(.viewBackground))
-                        .cornerRadius(16)
+                        .cornerRadius(4)
                 }
             }
                 .background(Color.sbbColor(.viewBackground))
-                .cornerRadius(16)
+                .cornerRadius(4)
         } else {
             Group {
                 if self.horizontalSizeClass == .compact && self.verticalSizeClass == .regular {
