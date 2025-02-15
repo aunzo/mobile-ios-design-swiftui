@@ -21,7 +21,13 @@ import SwiftUI
  */
 public struct SBBFormGroup<Content>: View where Content: View {
     
+    public enum FormGroupDirection {
+        case vertical
+        case horizontal
+    }
+    
     private let title: LocalizedStringKey?
+    private let direction: FormGroupDirection
     private let content: () -> Content
     
     /**
@@ -31,13 +37,14 @@ public struct SBBFormGroup<Content>: View where Content: View {
         - title: The optional Text to display as title on top of the vertically stacked elements.
         - content: The custom Views to be stacked vertically.
      */
-    public init(title: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(title: String? = nil, direction: FormGroupDirection = .vertical, @ViewBuilder content: @escaping () -> Content) {
         if let title = title {
             self.title = LocalizedStringKey(title)
         } else {
             self.title = nil
         }
         self.content = content
+        self.direction = direction
     }
     
     public var body: some View {
@@ -53,11 +60,21 @@ public struct SBBFormGroup<Content>: View where Content: View {
                 }
                 .accessibilityElement(children: .combine)
             }
-            VStack(alignment: .leading, spacing: 0) {
-                content()
+            
+            switch direction {
+                case .vertical:
+                    VStack(alignment: .leading, spacing: 0) {
+                        content()
+                    }
+                    .background(Color.sbbColor(.viewBackground))
+                    .cornerRadius(4)
+                case .horizontal:
+                    HStack(alignment: .top, spacing: 0) {
+                        content()
+                    }
+                    .background(Color.sbbColor(.viewBackground))
+                    .cornerRadius(4)
             }
-            .background(Color.sbbColor(.viewBackground))
-            .cornerRadius(4)
         }
     }
 }

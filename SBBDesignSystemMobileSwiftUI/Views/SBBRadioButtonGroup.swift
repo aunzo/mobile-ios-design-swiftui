@@ -26,6 +26,11 @@ import SwiftUI
  */
 public struct SBBRadioButtonGroup<RadioButtonContent, Selection>: View where RadioButtonContent: View, Selection: Hashable {
     
+    public enum Direction {
+        case vertical
+        case horizontal
+    }
+    
     private let title: String?
     @Binding private var selection: Selection
     private let tags: [Selection]
@@ -33,6 +38,8 @@ public struct SBBRadioButtonGroup<RadioButtonContent, Selection>: View where Rad
     private var selectionIndex: Int {
         return tags.firstIndex(of: selection) ?? 0
     }
+    
+    private var direction: Direction
     
     /**
      Returns a SBBRadioButtonGroup with an optional title and multiple selectable SBBRadioButton.
@@ -43,15 +50,22 @@ public struct SBBRadioButtonGroup<RadioButtonContent, Selection>: View where Rad
         - tags: An Array containing all SBBRadioButton options. Must have the same number of elements as content.
         - content: An Array of SBBRadioButton of the same type. Must have the same number of elements as tags.
      */
-    public init(title: String? = nil, selection: Binding<Selection>, tags: [Selection], @ArrayBuilder<RadioButtonContent> content: () -> [RadioButtonContent]) {
+    public init(
+        title: String? = nil,
+        selection: Binding<Selection>,
+        tags: [Selection],
+        direction: Direction = .horizontal,
+        @ArrayBuilder<RadioButtonContent> content: () -> [RadioButtonContent]
+    ) {
         self.title = title
         self._selection = selection
         self.tags = tags
+        self.direction = direction
         self.radioButtons = content()
     }
     
     public var body: some View {
-        SBBFormGroup(title: title) {
+        SBBFormGroup(title: title, direction: direction == .vertical ? .vertical : .horizontal) {
             ForEach(0..<self.radioButtons.count, id: \.self) { index in
                 radioButtons[index]
                     .isSelected(index == selectionIndex)
