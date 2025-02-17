@@ -97,7 +97,6 @@ struct CheckBoxAndRadioButtonContainer: View {
                             .sbbFont(.medium_light)
                             .padding(.top, 2)
                             .fixedSize(horizontal: false, vertical: true)
-                        Spacer()
                     }
                     if let subText = subText {
                         subText
