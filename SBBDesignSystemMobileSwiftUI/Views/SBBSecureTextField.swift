@@ -149,7 +149,7 @@ public struct SBBSecureTextField: View {
                             .padding(.trailing, 16)
                         }
                     }
-                    .frame(minHeight: 56)
+                    .frame(minHeight: 48)
                 }
             }
             .padding(.leading, 16)
@@ -164,10 +164,10 @@ public struct SBBSecureTextField: View {
                 Text(error)
                     .font(.sbbLight(size: 12))
                     .foregroundColor(.sbbColor(.red))
-                    .padding(.bottom, 8)
                     .padding(.leading, 16)
             }
         }
+        .padding(8.0)
     }
     
     private func emptyText() {
