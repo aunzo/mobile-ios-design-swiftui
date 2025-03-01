@@ -79,8 +79,8 @@ public struct SBBTextField: View {
                 return .sbbColor(.textBlack)
             case (true, false):
                 return .sbbColorInternal(.textfieldLineInactive)
-        default:
-            return Color.clear
+            case (false, _):
+                return .sbbColorInternal(.textfieldLineInactive)
         }
     }
     
@@ -153,7 +153,7 @@ public struct SBBTextField: View {
                 }
             }
             .padding(.leading, 16)
-            .foregroundColor(isEnabled ? .sbbColor(.textBlack) : .sbbColor(.metal))
+            .foregroundColor(.sbbColor(.textBlack))
             .cornerRadius(4)
             .overlay (
                 RoundedRectangle(cornerRadius: 4, style: .circular)
